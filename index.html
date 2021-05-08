@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container mt-4">
+    <form action="" method="" class="row g-3" id="formRegistro">
+      <div class="col-md-6">
+        <label for="inputnombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="inputnombre" name="nombre">
+      </div>
+      <div class="col-md-6">
+        <label for="inputcorreo" class="form-label">Correo</label>
+        <input type="email" class="form-control" id="inputcorreo" name="correo">
+      </div>
+      <div class="col-md-6">
+        <label for="inputcontraseña" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="inputcontraseña" name="contraseña">
+      </div>
+      <div class="col-md-6">
+        <label for="inputTipo" class="form-label">Tipo de usuario</label>
+        <select id="inputTipo" class="form-select" name="tipo">
+          <option selected>Elije...</option>
+          <option>...</option>
+        </select>
+      </div>
+      <div class="col-12 text-center">
+        <button type="submit" class="btn btn-primary">Registrar</button>
+      </div>
+    </form>
+    <hr class="m-3 border border-primary">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Correo</th>
+          <th scope="col">Tipo</th>
+        </tr>
+      </thead>
+      <tbody id="body">
+        
+      </tbody>
+    </table>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
