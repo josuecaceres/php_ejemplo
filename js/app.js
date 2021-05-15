@@ -133,3 +133,10 @@ function del(id){
       getUsers()
     })
 }
+
+//Reset de formulario y cancelacion de editar
+document.getElementById('btnReset').addEventListener('click', ()=>{
+  formRegistro.reset()
+  document.getElementById('btnRegistrar').style.display = 'inline'
+  document.getElementById('btnActualizar').style.display = 'none'
+})
