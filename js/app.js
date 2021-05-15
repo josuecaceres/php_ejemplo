@@ -1,5 +1,5 @@
 //Al cargar la pagina------------------------------------------------------------------------------
-window.addEventListener('load', () => {
+window.addEventListener('load', function() {
   fetch("php/obtener_tipo.php", {
     method: "GET",
     headers: {
@@ -23,14 +23,17 @@ window.addEventListener('load', () => {
   getUsers()
 })
 
-//Guardado de la info-------------------------------------------------------------------------------
 var formRegistro = document.getElementById('formRegistro')
+var usuarios
+var indiceTemporal
 
-formRegistro.addEventListener('submit', async event => {
-  event.preventDefault()
+//Guardado de la info-------------------------------------------------------------------------------
+formRegistro.addEventListener('submit', Event => {
+  Event.preventDefault()
   var user = new FormData(formRegistro)
+  user.append('metodo','agregar')
   
-  fetch("php/registrar.php", {
+  fetch("php/usuarios.php", {
     method: 'POST',
     body: user
   }).then(res => res.json())
@@ -40,30 +43,93 @@ formRegistro.addEventListener('submit', async event => {
     })
 })
 
-//obtener usuarios
+//obtener usuarios para rellenar la tabla
 function getUsers(){
-  fetch("php/obtener_user.php", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    }
+  var data = new FormData()
+  data.append('metodo','leer')
+
+  fetch("php/usuarios.php", {
+    method: "POST",
+    body: data,
   }).then(res => {
     if(res.ok){
       res.json().then(data => {
+        usuarios = data
         document.getElementById('body').innerHTML = ''
-        for (const valor of data) {
+        usuarios.forEach((element, index) => {
           document.getElementById('body').innerHTML += `
             <tr>
-              <th scope="row">${valor.id}</th>
-              <td>${valor.nombre}</td>
-              <td>${valor.correo}</td>
-              <td>${valor.tipo}</td>
+              <td scope="row">${element.id}</td>
+              <td>${element.nombre}</td>
+              <td>${element.correo}</td>
+              <td>${element.tipo}</td>
+              <td>
+                <button type="button" class="btn btn-sm bg-success" onclick="edit(${index})">
+                  <span class="material-icons">
+                    edit
+                  </span>
+                </button>
+                <button type="button" class="btn btn-sm bg-danger" onclick="del(${element.id})">
+                  <span class="material-icons">
+                    delete
+                  </span>
+                </button>
+              </td>
             </tr>
           `
-        }
+        })
       })
     }else{
       alert('Algo salio mal')
     }
   })
+}
+
+//editar
+function edit(index){
+  console.log(usuarios[index])
+  document.getElementById('inputNombre').value = usuarios[index].nombre
+  document.getElementById('inputCorreo').value = usuarios[index].correo
+  document.getElementById('inputContraseña').value = usuarios[index].contraseña
+  document.getElementById('inputTipo').value = usuarios[index].tipo
+
+  indiceTemporal = index
+  document.getElementById('btnRegistrar').style.display = 'none'
+  document.getElementById('btnActualizar').style.display = 'inline'
+}
+
+document.getElementById('btnActualizar').addEventListener('click', ()=>{
+  var data = new FormData(formRegistro)
+  data.append('metodo','editar')
+  data.append('id', usuarios[indiceTemporal].id)
+
+  fetch("php/usuarios.php", {
+    method: "POST",
+    body: data,
+  }).then(res => res.json())
+    .then(data => {
+      formRegistro.reset()
+      console.log(data)
+      document.getElementById('btnRegistrar').style.display = 'inline'
+      document.getElementById('btnActualizar').style.display = 'none'
+      getUsers()
+    })
+})
+
+//eliminar
+function del(id){
+  console.log(id)
+  var data = new FormData()
+  data.append('metodo','borrar')
+  data.append('id',id)
+
+  fetch("php/usuarios.php", {
+    method: "POST",
+    body: data,
+  }).then(res => res.json())
+    .then(data => {
+      formRegistro.reset()
+      console.log(data)
+      getUsers()
+    })
 }

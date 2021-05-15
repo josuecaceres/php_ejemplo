@@ -30,7 +30,7 @@
            $sql="INSERT INTO $insert_Into ($insert_Columns) VALUES ($insert_Values)";
            $consulta=$conexion->prepare($sql);
            if(!$consulta){
-               $this->mensaje="<script>alert('Error al insertar registro');</script>";
+               $this->mensaje="Error al registrar";
            }else{
                $consulta->execute();
                $this->mensaje="Registro añadido";
@@ -49,8 +49,8 @@
             $sql="SELECT $select FROM $from $condition";
             $consulta=$conexion->prepare($sql);
             $consulta->execute();
-            while($filas=$consulta->fetch()){
-                $this->rows[]=$filas;
+            while($filas = $consulta->fetch()){
+                $this->rows[] = $filas;
             }
         }
 
@@ -66,10 +66,10 @@
            $sql="UPDATE $update SET $set $condition";
            $consulta=$conexion->prepare($sql);
            if(!$consulta){
-               $this->mensaje="<script>alert('Error al tratar de actualizar registro');</script>";
+               $this->mensaje="Error al actualizar";
            }else{
                $consulta->execute();
-               $this->mensaje="<script>$('#Modal').modal('show');</script>";
+               $this->mensaje="Registro actualizado XD";
            }
        }
        
@@ -84,10 +84,10 @@
            $sql="DELETE FROM $deleteFrom $condition";
            $consulta=$conexion->prepare($sql);
            if(!$consulta){
-               $this->mensaje="<script>alert('Error al tratar de eliminar registro');</script>";
+               $this->mensaje="Error al borrar";
            }else{
                $consulta->execute();
-               $this->mensaje="<script>$('#Modal').modal('show');</script>";
+               $this->mensaje="Registro borrado XD";
            }
        }
         
