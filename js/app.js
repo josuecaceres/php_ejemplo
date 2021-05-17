@@ -11,7 +11,7 @@ window.addEventListener('load', function() {
         document.getElementById('inputTipo').innerHTML = ''
         for (const valor of data) {
           document.getElementById('inputTipo').innerHTML += `
-            <option>${valor.tipo}</option>
+            <option value="${valor.id}">${valor.tipo}</option>
           `
         }
       })
@@ -55,29 +55,33 @@ function getUsers(){
     if(res.ok){
       res.json().then(data => {
         usuarios = data
-        document.getElementById('body').innerHTML = ''
-        usuarios.forEach((element, index) => {
-          document.getElementById('body').innerHTML += `
-            <tr>
-              <td scope="row">${element.id}</td>
-              <td>${element.nombre}</td>
-              <td>${element.correo}</td>
-              <td>${element.tipo}</td>
-              <td>
-                <button type="button" class="btn btn-sm bg-success" onclick="edit(${index})">
-                  <span class="material-icons">
-                    edit
-                  </span>
-                </button>
-                <button type="button" class="btn btn-sm bg-danger" onclick="del(${element.id})">
-                  <span class="material-icons">
-                    delete
-                  </span>
-                </button>
-              </td>
-            </tr>
-          `
-        })
+        if(usuarios){
+          document.getElementById('body').innerHTML = ''
+          usuarios.forEach((element, index) => {
+            document.getElementById('body').innerHTML += `
+              <tr>
+                <td scope="row">${element.id}</td>
+                <td>${element.nombre}</td>
+                <td>${element.correo}</td>
+                <td>${element.tipo}</td>
+                <td>
+                  <button type="button" class="btn btn-sm bg-success" onclick="edit(${index})">
+                    <span class="material-icons">
+                      edit
+                    </span>
+                  </button>
+                  <button type="button" class="btn btn-sm bg-danger" onclick="del(${element.id})">
+                    <span class="material-icons">
+                      delete
+                    </span>
+                  </button>
+                </td>
+              </tr>
+            `
+          })
+        }else{
+          document.getElementById('body').innerHTML = 'No hay nada'
+        }
       })
     }else{
       alert('Algo salio mal')
